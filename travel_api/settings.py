@@ -49,6 +49,12 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+    'corsheaders',
+    'allauth',
+    'allauth.account',
+    'dj_rest_auth.registration',
+    'dj_rest_auth',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
