@@ -4,7 +4,7 @@ charset-normalizer==3.4.1
 cloudinary==1.43.0
 dj-database-url==2.3.0
 dj-rest-auth==7.0.1
-Django==5.1.7
+Django==4.2.16
 django-allauth==65.6.0
 django-cloudinary-storage==0.3.0
 django-cors-headers==4.7.0
