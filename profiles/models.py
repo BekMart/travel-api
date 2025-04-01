@@ -11,6 +11,9 @@ class Profile(models.Model):
     image = models.ImageField(
         upload_to='images/', default='../default_profile_ngcscr'
     )
+    nationality = models.CharField(max_length=255, blank=True)
+    age = models.PositiveIntegerField(blank=True, null=True)
+    resides = models.CharField(max_length=255, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now_add=True)
 
