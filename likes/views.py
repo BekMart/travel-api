@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework import generics
+from .models import Like
+from .serializers import LikeSerializer
 
-# Create your views here.
+
+class LikeList(generics.ListAPIView):
+    """
+    List all likes
+    """
+    queryset = Like.objects.all()
+    serializer_class = LikeSerializer
