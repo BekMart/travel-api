@@ -28,7 +28,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             following = Follow.objects.filter(
                 owner=user, followed=obj.owner
             ).first()
-            print(following)
             return following.id if following else None
         return None
 
