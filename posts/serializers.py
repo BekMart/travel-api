@@ -5,10 +5,21 @@ from .models import Post
 # Serializer for the Post model
 class PostSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
+    is_owner = serializers.SerializerMethodField()
+    profile_id = serializers.ReadOnlyField(source='owner.profile.id')
+    profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
+
+    def get_is_owner(self, obj):
+        """
+        Check if the current user is the owner of the post.
+        """
+        request = self.context['request']
+        return request.user == obj.owner
 
     class Meta:
         model = Post
         fields = [
             'id', 'owner', 'title', 'content', 'image', 'location',
-            'created_on', 'updated_on'
+            'created_on', 'updated_on', 'is_owner', 'profile_id',
+            'profile_image',
         ]
