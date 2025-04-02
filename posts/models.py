@@ -3,13 +3,15 @@ from django.contrib.auth.models import User
 from locations.models import Location
 
 
-# Post model that represents a travel post
 class Post(models.Model):
+    """
+    Post model, related to User and Location.
+    """
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     content = models.TextField(blank=True)
     image = models.ImageField(
-        upload_to='images/', default='../default_post_image_pr9kie'
+        upload_to='images/', default='../default_post_image_pr9kie', blank=True
     )
     location = models.ForeignKey(
         Location, on_delete=models.SET_NULL,
