@@ -20,3 +20,12 @@ class NotificationSerializer(serializers.ModelSerializer):
             'created_on',
             'is_read',
         ]
+
+
+class ReadAllNotificationsSerializer(serializers.ModelSerializer):
+    """
+    Serializer for marking all notifications as read
+    """
+    class Meta:
+        model = Notification
+        fields = ['is_read']
