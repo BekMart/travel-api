@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import LocationList
+from locations import views
 
 urlpatterns = [
-    path('locations/', LocationList.as_view(), name='location-list'),
+    path('locations/', views.LocationList.as_view()),
+    path('locations/<slug:slug>/', views.LocationDetail.as_view()),
 ]
