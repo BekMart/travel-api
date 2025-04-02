@@ -9,3 +9,12 @@ class LocationList(generics.ListAPIView):
     """
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+
+
+class LocationDetail(generics.RetrieveAPIView):
+    """
+    Retrieve a location by slug
+    """
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+    lookup_field = 'slug'
