@@ -4,18 +4,15 @@ from django_filters.rest_framework import DjangoFilterBackend
 from travel_api.permissions import IsOwnerOrReadOnly
 from .models import Post
 from .serializers import PostSerializer
+from followers.models import Follow
 
 
-class PostList(generics.ListCreateAPIView):
+class BasePostListView(generics.ListAPIView):
     """
-    List all posts or create if logged in.
+    Base view for listing posts with common behaviour.
     """
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Post.objects.annotate(
-        likes_count=Count('likes', distinct=True),
-        comments_count=Count('comment', distinct=True),
-    ).order_by('-created_on')
     filter_backends = [
         filters.OrderingFilter,
         DjangoFilterBackend,
@@ -39,11 +36,37 @@ class PostList(generics.ListCreateAPIView):
         'updated_on',  # show all posts ordered by updated date
     ]
 
+    def get_base_queryset(self):
+        """
+        Shared queryset logic for post views.
+        """
+        return Post.objects.annotate(
+            likes_count=Count('likes', distinct=True),
+            comments_count=Count('comment', distinct=True),
+        ).order_by('-created_on')
+
+
+class PostList(BasePostListView, generics.ListCreateAPIView):
+    """
+    List all posts or create a new post if logged in.
+    """
+    def get_queryset(self):
+        return self.get_base_queryset()
+
     def perform_create(self, serializer):
-        """
-        Save the post with the current user as the owner.
-        """
         serializer.save(owner=self.request.user)
+
+
+class PostFeedList(BasePostListView):
+    """
+    List posts only from users the current user follows.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        followed_users = Follow.objects.filter(owner=user).values_list('followed', flat=True)
+        return self.get_base_queryset().filter(owner__in=followed_users).order_by('-created_on')
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -56,46 +79,3 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
         likes_count=Count('likes', distinct=True),
         comments_count=Count('comment', distinct=True),
     ).order_by('-created_on')
-
-
-class PostFeedList(generics.ListAPIView):
-    """
-    List posts only from users the current user follows.
-    """
-    serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    filter_backends = [
-        filters.OrderingFilter,
-        DjangoFilterBackend,
-        filters.SearchFilter,
-    ]
-    search_fields = [
-        'owner__username',
-        'title',
-        'location__name',
-        'content',
-    ]
-    filterset_fields = [
-        'owner__profile',  # show all posts by a user
-        'location__slug',  # show all posts in a location
-    ]
-    ordering_fields = [
-        'likes_count',
-        'comments_count',
-        'created_on',
-        'updated_on',
-    ]
-
-    def get_queryset(self):
-        from followers.models import Follow
-
-        user = self.request.user
-        followed_users = Follow.objects.filter(owner=user).values_list(
-            'followed', flat=True)
-
-        queryset = Post.objects.annotate(
-            likes_count=Count('likes', distinct=True),
-            comments_count=Count('comment', distinct=True),
-        ).filter(owner__in=followed_users).order_by('-created_on')
-
-        return queryset
