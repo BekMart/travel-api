@@ -27,10 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,  # ✅ Load 10 items per page
-    'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend',
-    ]
+    'PAGE_SIZE': 10,  # Load 10 items per page
+    'DATETIME_FORMAT': '%d %b %Y',  # Format for datetime fields
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 # Quick-start development settings - unsuitable for production
