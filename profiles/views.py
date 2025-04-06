@@ -38,3 +38,15 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
     ).order_by('-created_on')
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
+
+class PopularProfilesList(generics.ListAPIView):
+    """
+    List profiles ordered by number of followers.
+    """
+    serializer_class = ProfileSerializer
+
+    def get_queryset(self):
+        return Profile.objects.annotate(
+            followers_count=Count('owner__followed', distinct=True)
+        ).order_by('-followers_count', 'owner__username')
