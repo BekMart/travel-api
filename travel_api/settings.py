@@ -36,6 +36,11 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': '%d %b %Y',  # Format for datetime fields
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+if 'DEV' not in os.environ:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ]
 
 REST_USE_JWT = True
 JWT_AUTH_SECURE = True
