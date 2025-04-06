@@ -68,7 +68,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'travel-api.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'https://travel-api-ca880bcd8809.herokuapp.com']
 
 # Application definition
 INSTALLED_APPS = [
