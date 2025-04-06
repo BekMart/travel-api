@@ -1,2 +1,2 @@
 release: python manage.py makemigrations && python manage.py migrate
-web: gunicorn drf_api.wsgiß
+web: gunicorn travel_api.wsgiß
