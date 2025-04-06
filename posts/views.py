@@ -65,8 +65,10 @@ class PostFeedList(BasePostListView):
 
     def get_queryset(self):
         user = self.request.user
-        followed_users = Follow.objects.filter(owner=user).values_list('followed', flat=True)
-        return self.get_base_queryset().filter(owner__in=followed_users).order_by('-created_on')
+        followed_users = Follow.objects.filter(owner=user).values_list(
+            'followed', flat=True)
+        return self.get_base_queryset().filter(
+            owner__in=followed_users).order_by('-created_on')
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
