@@ -38,4 +38,4 @@ class LocationPostList(generics.ListAPIView):
         return Post.objects.filter(location__slug=slug).annotate(
             likes_count=Count('likes', distinct=True),
             comments_count=Count('comment', distinct=True),
-        ).order_by('-id')
+        ).order_by('-likes_count', '-comments_count', '-created_on')
