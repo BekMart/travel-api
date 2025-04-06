@@ -19,6 +19,13 @@ class PostList(generics.ListCreateAPIView):
     filter_backends = [
         filters.OrderingFilter,
         DjangoFilterBackend,
+        filters.SearchFilter,
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
+        'location__name',
+        'content',
     ]
     filterset_fields = [
         'owner__profile',  # show all posts by a user
@@ -60,6 +67,13 @@ class PostFeedList(generics.ListAPIView):
     filter_backends = [
         filters.OrderingFilter,
         DjangoFilterBackend,
+        filters.SearchFilter,
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
+        'location__name',
+        'content',
     ]
     filterset_fields = [
         'owner__profile',  # show all posts by a user
@@ -76,7 +90,8 @@ class PostFeedList(generics.ListAPIView):
         from followers.models import Follow
 
         user = self.request.user
-        followed_users = Follow.objects.filter(owner=user).values_list('followed', flat=True)
+        followed_users = Follow.objects.filter(owner=user).values_list(
+            'followed', flat=True)
 
         queryset = Post.objects.annotate(
             likes_count=Count('likes', distinct=True),
