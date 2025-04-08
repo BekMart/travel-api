@@ -120,12 +120,10 @@ MIDDLEWARE = [
 
 # URL Configuration
 CORS_ALLOWED_ORIGINS = [
-#   origin for origin in [
-#     os.environ.get('CLIENT_ORIGIN'),
-#     os.environ.get('CLIENT_ORIGIN_DEV')
-#   ] if origin
-    "http://localhost:3000",
-    "https://travel-tales-5c522e360995.herokuapp.com",
+  origin for origin in [
+    os.environ.get('CLIENT_ORIGIN'),
+    os.environ.get('CLIENT_ORIGIN_DEV'),
+  ] if origin
 ]
 
 CORS_ALLOW_CREDENTIALS = True
