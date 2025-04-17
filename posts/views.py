@@ -28,6 +28,7 @@ class BasePostListView(generics.ListAPIView):
         'owner__profile',  # show all posts by a user
         'location__slug',  # show all posts in a location
         'likes__owner__profile',  # show all posts liked by a user
+        'owner__followed__owner__profile'  # show all posts by followed users
     ]
     ordering_fields = [
         'likes_count',  # show all posts ordered by likes
