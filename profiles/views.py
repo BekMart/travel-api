@@ -15,6 +15,10 @@ class ProfileList(generics.ListAPIView):
         following_count=Count('owner__following', distinct=True),
     ).order_by('-created_on')
     serializer_class = ProfileSerializer
+    search_fields = [
+        'owner__username', 
+        'content',
+    ]
     filter_backends = [
             filters.OrderingFilter
         ]
