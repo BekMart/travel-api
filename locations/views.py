@@ -39,3 +39,16 @@ class LocationPostList(generics.ListAPIView):
             likes_count=Count('likes', distinct=True),
             comments_count=Count('comment', distinct=True),
         ).order_by('-likes_count', '-comments_count', '-created_on')
+
+
+class TopLocationList(generics.ListAPIView):
+    """
+    List top 5 locations, ordered by:
+    - number of posts, and likes and comments on those posts
+    """
+    serializer_class = LocationSerializer
+    queryset = Location.objects.annotate(
+        posts_count=Count('posts', distinct=True),
+        likes_count=Count('posts__likes', distinct=True),
+        comments_count=Count('posts__comment', distinct=True),
+    ).order_by('-posts_count', '-likes_count', '-comments_count')[:5]
