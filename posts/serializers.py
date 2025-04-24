@@ -73,13 +73,8 @@ class PostSerializer(serializers.ModelSerializer):
         validated_data['location'] = location
         post = super().create(validated_data)
 
-        # Automatically set the location image to the most popular post's image
-        most_popular_post = Post.objects.filter(location=location).annotate(
-            popularity_score=Count('likes') + Count('comment')
-        ).order_by('-popularity_score', '-created_on').first()
-
-        if most_popular_post and most_popular_post.image:
-            location.image = most_popular_post.image
+        if not location.image and post.image:
+            location.image = post.image
             location.save()
 
         return post
