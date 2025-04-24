@@ -73,9 +73,12 @@ class PostSerializer(serializers.ModelSerializer):
         validated_data['location'] = location
         post = super().create(validated_data)
 
-        if not location.image and post.image:
-            location.image = post.image
-            location.save()
+        try:
+            if not location.image and post.image:
+                location.image = post.image
+                location.save()
+        except Exception as e:
+            print("Error assigning location image:", e)
 
         return post
 
