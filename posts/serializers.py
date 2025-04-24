@@ -13,10 +13,17 @@ class PostSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
-    location = LocationSerializer(read_only=True)
+    location = serializers.CharField()
+    location_details = LocationSerializer(read_only=True)
     like_id = serializers.SerializerMethodField()
     likes_count = serializers.ReadOnlyField()
     comments_count = serializers.ReadOnlyField()
+
+    def get_location_details(self, obj):
+        """
+        Get the location details for the post.
+        """
+        return LocationSerializer(obj.location).data
 
     def validate_image(self, value):
         """
@@ -59,8 +66,9 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = [
             'id', 'owner', 'title', 'content', 'image', 'location',
-            'created_on', 'updated_on', 'is_owner', 'profile_id',
-            'profile_image', 'like_id', 'likes_count', 'comments_count',
+            'location_details', 'created_on', 'updated_on', 'is_owner',
+            'profile_id', 'profile_image', 'like_id', 'likes_count',
+            'comments_count',
         ]
 
     def create(self, validated_data):
