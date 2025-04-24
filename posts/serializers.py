@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Post
 from locations.models import Location
 from likes.models import Like
+from django.db.models import Count
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -70,7 +71,18 @@ class PostSerializer(serializers.ModelSerializer):
         location_name = validated_data.pop('location')
         location, created = Location.objects.get_or_create(name=location_name)
         validated_data['location'] = location
-        return super().create(validated_data)
+        post = super().create(validated_data)
+
+        # Automatically set the location image to the most popular post's image
+        most_popular_post = Post.objects.filter(location=location).annotate(
+            popularity_score=Count('likes') + Count('comment')
+        ).order_by('-popularity_score', '-created_on').first()
+
+        if most_popular_post and most_popular_post.image:
+            location.image = most_popular_post.image
+            location.save()
+
+        return post
 
     def update(self, instance, validated_data):
         """
