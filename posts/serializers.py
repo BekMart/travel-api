@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.db.models import Count
 from .models import Post
 from locations.models import Location
 from likes.models import Like
@@ -82,8 +83,13 @@ class PostSerializer(serializers.ModelSerializer):
         post = super().create(validated_data)
 
         try:
-            if not location.image and post.image:
-                location.image = post.image
+            popular_post_with_image = location.posts \
+                .filter(image__isnull=False) \
+                .annotate(likes_count=Count('likes')) \
+                .order_by('-likes_count', '-created_on') \
+                .first()
+            if popular_post_with_image:
+                location.image = popular_post_with_image.image
                 location.save()
         except Exception as e:
             print("Error assigning location image:", e)
