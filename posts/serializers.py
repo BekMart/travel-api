@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Post
 from locations.models import Location
 from likes.models import Like
+from locations.serializers import LocationSerializer
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -12,7 +13,7 @@ class PostSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
-    location = serializers.CharField()
+    location = LocationSerializer(read_only=True)
     like_id = serializers.SerializerMethodField()
     likes_count = serializers.ReadOnlyField()
     comments_count = serializers.ReadOnlyField()
