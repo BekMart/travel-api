@@ -8,9 +8,7 @@ class Comment(models.Model):
     Comment model, related to User and Post
     """
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(
-        Post, on_delete=models.CASCADE, related_name='comment'
-        )
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
