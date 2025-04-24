@@ -13,8 +13,8 @@ class PostSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
-    location = serializers.CharField()
-    location_details = LocationSerializer(read_only=True)
+    location = serializers.CharField(write_only=True)
+    location_details = LocationSerializer(source='location', read_only=True)
     like_id = serializers.SerializerMethodField()
     likes_count = serializers.ReadOnlyField()
     comments_count = serializers.ReadOnlyField()
@@ -88,6 +88,7 @@ class PostSerializer(serializers.ModelSerializer):
         except Exception as e:
             print("Error assigning location image:", e)
 
+        post.refresh_from_db()
         return post
 
     def update(self, instance, validated_data):
