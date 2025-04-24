@@ -13,7 +13,7 @@ class LocationList(generics.ListAPIView):
     serializer_class = LocationSerializer
     queryset = Location.objects.annotate(
         posts_count=Count('posts', distinct=True)
-    ).order_by('-posts_count')
+    ).filter(posts_count__gt=0).order_by('-posts_count')
 
 
 class LocationDetail(generics.RetrieveAPIView):
