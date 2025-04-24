@@ -51,4 +51,5 @@ class TopLocationList(generics.ListAPIView):
         posts_count=Count('posts', distinct=True),
         likes_count=Count('posts__likes', distinct=True),
         comments_count=Count('posts__comment', distinct=True),
-    ).order_by('-posts_count', '-likes_count', '-comments_count')[:5]
+        ).filter(posts_count__gt=0).order_by(
+            '-posts_count', '-likes_count', '-comments_count')[:5]
