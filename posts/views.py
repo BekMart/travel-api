@@ -82,3 +82,13 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
         likes_count=Count('likes', distinct=True),
         comments_count=Count('comment', distinct=True),
     ).order_by('-created_on')
+
+
+class TopPostList(generics.ListAPIView):
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        return Post.objects.annotate(
+            likes_count=Count('likes', distinct=True),
+            comments_count=Count('comment', distinct=True),
+        ).order_by('-likes_count', '-comments_count', '-created_on')[:5]
