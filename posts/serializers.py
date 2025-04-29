@@ -14,17 +14,24 @@ class PostSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
-    location = serializers.CharField(write_only=True)
+    location = serializers.SerializerMethodField()
+    location_input = serializers.CharField(write_only=True)
     location_details = LocationSerializer(source='location', read_only=True)
     like_id = serializers.SerializerMethodField()
     likes_count = serializers.ReadOnlyField()
     comments_count = serializers.ReadOnlyField()
 
-    def get_location_details(self, obj):
-        """
-        Get the location details for the post.
-        """
-        return LocationSerializer(obj.location).data
+    class Meta:
+        model = Post
+        fields = [
+            'id', 'owner', 'title', 'content', 'image', 'location',
+            'location_input', 'location_details', 'created_on', 'updated_on',
+            'is_owner', 'profile_id', 'profile_image', 'like_id',
+            'likes_count', 'comments_count',
+        ]
+
+    def get_location(self, obj):
+        return obj.location.name
 
     def validate_image(self, value):
         """
@@ -63,27 +70,28 @@ class PostSerializer(serializers.ModelSerializer):
             return like.id if like else None
         return None
 
-    class Meta:
-        model = Post
-        fields = [
-            'id', 'owner', 'title', 'content', 'image', 'location',
-            'location_details', 'created_on', 'updated_on', 'is_owner',
-            'profile_id', 'profile_image', 'like_id', 'likes_count',
-            'comments_count',
-        ]
+    def _get_or_create_location(self, location_name):
+        """
+        Case-insensitive lookup for location, creating it if necessary.
+        """
+        cleaned_name = location_name.strip()
+        display_name = cleaned_name.capitalize()
+        location = Location.objects.filter(name__iexact=cleaned_name).first()
+        if not location:
+            location = Location.objects.create(name=display_name)
+        return location
 
     def create(self, validated_data):
         """
         This method handles the creation of the location instance
         if it does not exist.
         """
-        location_name = validated_data.pop('location').strip().lower()
-        location = Location.objects.filter(name__iexact=location_name).first()
-        if not location:
-            location = Location.objects.create(name=location_name)
+        location_name = validated_data.pop('location_input')
+        location = self._get_or_create_location(location_name)
         validated_data['location'] = location
         post = super().create(validated_data)
 
+        # Set location image based on most liked post
         try:
             popular_post_with_image = location.posts \
                 .filter(image__isnull=False) \
@@ -105,11 +113,8 @@ class PostSerializer(serializers.ModelSerializer):
         This method handles the update of the location instance
         if the location name is provided.
         """
-        location_name = validated_data.pop('location', None)
+        location_name = validated_data.pop('location_input', None)
         if location_name:
-            location_name = location_name.strip().lower()
-            location = Location.objects.filter(name__iexact=location_name).first()
-            if not location:
-                location = Location.objects.create(name=location_name)
+            location = self._get_or_create_location(location_name)
             validated_data['location'] = location
         return super().update(instance, validated_data)
