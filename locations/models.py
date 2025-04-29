@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.db.models.functions import Lower
 
 
 class Location(models.Model):
@@ -9,9 +10,17 @@ class Location(models.Model):
     description = models.TextField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
+        self.name = self.name.strip().lower()
+        self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                Lower('name'),
+                name='unique_location_name_ci'
+            )
+        ]

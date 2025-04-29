@@ -77,7 +77,7 @@ class PostSerializer(serializers.ModelSerializer):
         This method handles the creation of the location instance
         if it does not exist.
         """
-        location_name = validated_data.pop('location')
+        location_name = validated_data.pop('location').strip().lower()
         location, created = Location.objects.get_or_create(name=location_name)
         validated_data['location'] = location
         post = super().create(validated_data)
@@ -105,6 +105,7 @@ class PostSerializer(serializers.ModelSerializer):
         """
         location_name = validated_data.pop('location', None)
         if location_name:
+            location_name = location_name.strip().lower()
             location, created = Location.objects.get_or_create(
                 name=location_name
             )
