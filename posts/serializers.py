@@ -78,7 +78,9 @@ class PostSerializer(serializers.ModelSerializer):
         if it does not exist.
         """
         location_name = validated_data.pop('location').strip().lower()
-        location, created = Location.objects.get_or_create(name=location_name)
+        location = Location.objects.filter(name__iexact=location_name).first()
+        if not location:
+            location = Location.objects.create(name=location_name)
         validated_data['location'] = location
         post = super().create(validated_data)
 
@@ -106,8 +108,8 @@ class PostSerializer(serializers.ModelSerializer):
         location_name = validated_data.pop('location', None)
         if location_name:
             location_name = location_name.strip().lower()
-            location, created = Location.objects.get_or_create(
-                name=location_name
-            )
+            location = Location.objects.filter(name__iexact=location_name).first()
+            if not location:
+                location = Location.objects.create(name=location_name)
             validated_data['location'] = location
         return super().update(instance, validated_data)
