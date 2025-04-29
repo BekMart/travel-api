@@ -29,6 +29,11 @@ class PostSerializer(serializers.ModelSerializer):
             'is_owner', 'profile_id', 'profile_image', 'like_id',
             'likes_count', 'comments_count',
         ]
+        read_only_fields = [
+            'location', 'location_details', 'owner', 'profile_id',
+            'profile_image', 'like_id', 'likes_count', 'comments_count',
+            'created_on', 'updated_on'
+        ]
 
     def get_location(self, obj):
         return obj.location.name
