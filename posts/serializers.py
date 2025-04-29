@@ -14,7 +14,7 @@ class PostSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
-    location = serializers.SerializerMethodField()
+    location = serializers.SerializerMethodField(read_only=True)
     location_input = serializers.CharField(write_only=True)
     location_details = LocationSerializer(source='location', read_only=True)
     like_id = serializers.SerializerMethodField()
