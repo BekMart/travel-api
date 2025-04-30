@@ -1,8 +1,9 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Notification
-from .serializers import NotificationSerializer, ReadAllNotificationsSerializer
+from .serializers import NotificationSerializer
 
 
 class NotificationList(generics.ListAPIView):
@@ -35,14 +36,16 @@ class UnreadNotificationList(generics.ListAPIView):
         ).order_by('-created_on')
 
 
-class MarkAllNotificationsRead(APIView):
+class MarkNotificationRead(APIView):
     """
-    Mark all notifications as read for currently authenticated user.
+    Mark a single notification as read.
     """
-    serializer_class = ReadAllNotificationsSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def put(self, request):
-        Notification.objects.filter(
-            to_user=request.user, is_read=False).update(is_read=True)
-        return Response({'status': 'all notifications marked as read'})
+    def put(self, request, pk):
+        notification = get_object_or_404(
+            Notification, pk=pk, to_user=request.user
+        )
+        notification.is_read = True
+        notification.save()
+        return Response({'status': 'notification marked as read'})
