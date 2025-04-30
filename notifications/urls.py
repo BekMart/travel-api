@@ -7,5 +7,9 @@ urlpatterns = [
     path(
         'notifications/<int:pk>/mark-read/',
         views.MarkNotificationRead.as_view()
+        ),
+    path(
+        'notifications/mark-all-read/',
+        views.MarkAllNotificationsRead.as_view()
         )
 ]

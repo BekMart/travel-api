@@ -3,7 +3,7 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Notification
-from .serializers import NotificationSerializer
+from .serializers import NotificationSerializer, ReadAllNotificationsSerializer
 
 
 class NotificationList(generics.ListAPIView):
@@ -49,3 +49,16 @@ class MarkNotificationRead(APIView):
         notification.is_read = True
         notification.save()
         return Response({'status': 'notification marked as read'})
+
+
+class MarkAllNotificationsRead(APIView):
+    """
+    Mark all notifications as read for currently authenticated user.
+    """
+    serializer_class = ReadAllNotificationsSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def put(self, request):
+        Notification.objects.filter(
+            to_user=request.user, is_read=False).update(is_read=True)
+        return Response({'status': 'all notifications marked as read'})
