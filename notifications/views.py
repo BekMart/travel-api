@@ -8,7 +8,7 @@ from .serializers import NotificationSerializer, ReadAllNotificationsSerializer
 
 class NotificationList(generics.ListAPIView):
     """
-    List all notifications
+    List all of a users notifications
     """
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
@@ -16,7 +16,7 @@ class NotificationList(generics.ListAPIView):
 
     def get_queryset(self):
         """
-        List all notifications for currently authenticated user.
+        List all notifications for currently authenticated user newest first
         """
         return Notification.objects.filter(to_user=self.request.user).order_by(
             '-created_on')
@@ -24,7 +24,7 @@ class NotificationList(generics.ListAPIView):
 
 class UnreadNotificationList(generics.ListAPIView):
     """
-    List only unread notifications for the current user.
+    List only unread notifications for the current user
     """
     serializer_class = NotificationSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -38,7 +38,7 @@ class UnreadNotificationList(generics.ListAPIView):
 
 class MarkNotificationRead(APIView):
     """
-    Mark a single notification as read.
+    Mark a single notification as read
     """
     permission_classes = [permissions.IsAuthenticated]
 
@@ -53,7 +53,7 @@ class MarkNotificationRead(APIView):
 
 class MarkAllNotificationsRead(APIView):
     """
-    Mark all notifications as read for currently authenticated user.
+    Mark all notifications as read for currently authenticated user
     """
     serializer_class = ReadAllNotificationsSerializer
     permission_classes = [permissions.IsAuthenticated]

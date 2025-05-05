@@ -85,6 +85,10 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class TopPostList(generics.ListAPIView):
+    """
+    List top 5 posts, ordered by:
+    - number of likes and comments on those posts
+    """
     serializer_class = PostSerializer
 
     def get_queryset(self):

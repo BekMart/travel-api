@@ -16,7 +16,7 @@ class ProfileList(generics.ListAPIView):
     ).order_by('-created_on')
     serializer_class = ProfileSerializer
     search_fields = [
-        'owner__username', 
+        'owner__username',
         'content',
     ]
     filter_backends = [
@@ -33,7 +33,7 @@ class ProfileList(generics.ListAPIView):
 
 class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
-    Retrieve or update a profile if you're the owner.
+    Retrieve or update a profile if you're the owner
     """
     queryset = Profile.objects.annotate(
         posts_count=Count('owner__post', distinct=True),
@@ -46,7 +46,7 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
 
 class PopularProfilesList(generics.ListAPIView):
     """
-    List profiles ordered by number of followers.
+    List profiles ordered by number of followers
     """
     serializer_class = ProfileSerializer
 

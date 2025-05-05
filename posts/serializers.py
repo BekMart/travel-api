@@ -96,8 +96,10 @@ class PostSerializer(serializers.ModelSerializer):
         validated_data['location'] = location
         post = super().create(validated_data)
 
-        # Set location image based on most liked post
         try:
+            """
+            Set location image based on most liked post image
+            """
             popular_post_with_image = location.posts \
                 .filter(image__isnull=False) \
                 .annotate(likes_count=Count('likes')) \

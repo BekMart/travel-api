@@ -15,6 +15,9 @@ class FollowSerializer(serializers.ModelSerializer):
         fields = ['id', 'owner', 'followed', 'created_on', 'followed_name']
 
     def create(self, validated_data):
+        """
+        Override the default create method to handle duplicate entries
+        """
         try:
             return super().create(validated_data)
         except IntegrityError:

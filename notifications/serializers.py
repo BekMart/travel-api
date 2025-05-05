@@ -3,6 +3,10 @@ from .models import Notification
 
 
 class NotificationSerializer(serializers.ModelSerializer):
+    """
+    Serializer for displaying notification details, including info about
+    the users involved and optionally related posts or comments
+    """
     from_user = serializers.StringRelatedField(read_only=True)
     from_user_profile_id = serializers.IntegerField(
         source='from_user.profile.id', read_only=True
@@ -28,7 +32,8 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 class ReadAllNotificationsSerializer(serializers.ModelSerializer):
     """
-    Serializer for marking all notifications as read
+    Serializer for updating notifications, specifically to mark them as read
+    Used when bulk-marking notifications
     """
     class Meta:
         model = Notification

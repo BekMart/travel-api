@@ -4,6 +4,10 @@ from django.db.models.functions import Lower
 
 
 class Location(models.Model):
+    """
+    Model representing a travel location that can be associated with Posts.
+    Includes automatic slug generation and name case-insensitive/uniqueness.
+    """
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True, blank=True)
     image = models.ImageField(upload_to='locations/', blank=True, null=True)

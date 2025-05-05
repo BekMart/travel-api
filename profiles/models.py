@@ -3,8 +3,11 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
 
-# Profile model that extends the User model
 class Profile(models.Model):
+    """
+    Profile model extending the built-in User model with additional fields.
+    Each user has one profile created automatically upon registration.
+    """
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, blank=True)
     content = models.TextField(blank=True)
@@ -24,11 +27,13 @@ class Profile(models.Model):
         return f"{self.owner}'s profile"
 
 
-# This function creates a profile for each user when the user is created.
 def create_profile(sender, instance, created, **kwargs):
+    """
+    This function creates a profile instance automatically when a user is
+    created and saves the profile when the user is saved
+    """
     if created:
         Profile.objects.create(owner=instance)
 
 
-# This saves the profile when the user is saved.
 post_save.connect(create_profile, sender=User)

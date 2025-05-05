@@ -5,6 +5,11 @@ from comments.models import Comment
 
 
 class Notification(models.Model):
+    """
+    Notification model which sends details to a user when another user
+    interacts with their post via likes or comments or by
+    following their profile.
+    """
     NOTIFICATION_TYPES = [
         ('like', 'Like'),
         ('comment', 'Comment'),

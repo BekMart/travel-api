@@ -15,6 +15,9 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = ['id', 'owner', 'post', 'created_on']
 
     def create(self, validated_data):
+        """
+        Override the default create method to handle duplicate entries
+        """
         try:
             return super().create(validated_data)
         except IntegrityError:
