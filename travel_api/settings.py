@@ -70,7 +70,7 @@ ACCOUNT_USER_MODEL_EMAIL_FIELD = 'email'
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'DEV' in os.environ
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
