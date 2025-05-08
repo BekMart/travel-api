@@ -456,5 +456,16 @@ else:
 
 <h1 id="credits">Credits</h1>
 
+### Acknowledgments
+
+The initial setup and the general structure of this API are heavily based on Code Institute's [Django Rest Framework walkthrough project](https://github.com/Code-Institute-Solutions/drf-api/). Core elements such as the Profile, Post, Like, Comment, and Follower models, along with their corresponding serializers and filtering functionality, were adapted from the walkthrough. These components were then customized and extended to suit the unique requirements of the Travel Tales project.
+
+I refrenced the following documentation to help with my understanding of Django and how to implement it within my project:
+[Django documentation](https://www.djangoproject.com/)
+[Django Rest Framework documentation](https://www.django-rest-framework.org/)
+[django-filter documentation](https://django-filter.readthedocs.io/en/stable/)
+
+I recieved help and guidance from the **CI Tutor support** team throughout this build and **ChatGPT** for assistancxe with troubleshooting and logic refinement.
+
 [Back to Contents](#contents)
 
