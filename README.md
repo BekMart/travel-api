@@ -39,11 +39,13 @@ The deployed API can be found here: [Travel API](https://travel-api-ca880bcd8809
     - [User Story Testing](#user-story-testing)
     - [Functionality Testing](#functionality-testing)
     - [Validation](#validation)
-    - [Bugs](#bugs)
+    - [Issues Found](#issues)
 - [Deployment](#deployment)
 - [Credits](#credits)
 
 <h1 id="design-process">Design Process</h1>
+
+Much of the [design process](https://github.com/BekMart/travel-tales#design-process) is outlined in the front-end applications [README](https://github.com/BekMart/travel-tales) documentation. This is where you will find the site user stories and details of the [agile development](https://github.com/BekMart/travel-tales#agile-development) process implemented.  
 
 <h2 id="user-stories">User Stories</h2>
 
@@ -272,7 +274,7 @@ The Travel API provides the following endpoints:
 
 4. As a web developer I want to use token authentication to authenticate users login details to ensure users data is secure and updated efficiently.
 
-I have tested the functionality of all individual features and clearly evidenced their correct behavior in the [User stories section]() of the TravelTales README file. 
+I have tested the functionality of all individual features and clearly evidenced their correct behavior in the [User stories section](https://github.com/BekMart/travel-tales#user-story-testing) of the Travel Tales README file. 
 
 Additionally, I have included screenshots that demonstrate how actions taken on the deployed TravelTales front-end are accurately reflected in the deployed API. This confirms the two applications are properly connected and update in real-time, fulfilling the key requirements of the developer-focused user stories. These images serve as proof that the API is working as intended and that users can successfully interact with it through the front-end interface.
 
@@ -354,12 +356,39 @@ The `/locations/slug/posts/` endpoint displays a list of posts that are assocate
 
 All python code written for the project passes through the PEP 8 [CI Python Linter](https://pep8ci.herokuapp.com/) with no issues.
 
-<h2 id="bugs">Bugs</h2>
+<h2 id="issues">Issues Found</h2>
 
-### Solved bugs
+### Solved Bugs
 
+#### Local Development Configuration Issue
+While setting up local development for the front-end, I initially encountered issues connecting to the deployed back-end API. Although the deployed site worked correctly, local requests from the front-end returned a 502 Bad Gateway error.
+
+After reaching out to Tutor Support, I discovered the issue stemmed from misconfigured environment variables and an incomplete understanding of how the front-end communicates with the back-end.
+
+Specifically, I needed to:
+- Add the correct local development URL (e.g., http://localhost:3000) as CLIENT_ORIGIN_DEV in the Heroku config vars of the API project.
+- Update CORS_ALLOWED_ORIGINS in the API’s settings to include both the deployed front-end and the local development front-end.
+- Ensure the Axios baseURL in the front-end project correctly pointed to the back-end URL depending on the environment (local or deployed).
+
+With this guidance, I learned how the front-end and back-end are linked through CORS settings, environment variables, and Axios configuration. Once these were correctly set, the connection was established successfully.
+
+#### Authentication Issue and Resolution
+During development, I encountered a persistent 403 Forbidden error when attempting to log in or register users through the front-end application. Although the back-end API responded with a 200 OK status for valid credentials, the application was blocked shortly afterward, preventing authentication from completing.
+
+After troubleshooting and a session with Tutor Support, the issue was traced to a misconfiguration involving environment variables. Specifically, the env.py file had been accidentally committed to version control, causing Heroku to prioritize local variables over the ones set via Config Vars. This led to the front-end and back-end becoming misaligned, especially regarding authentication and CORS settings.
+
+To resolve this, I removed env.py from the project and added it to .gitignore to prevent future exposure. I then regenerated the sensitive environment variables — including the SECRET_KEY and Cloudinary credentials — and configured them securely in Heroku's Config Vars. I chose to retain the original PostgreSQL DATABASE_URL to avoid data loss, and ensured the correct CLIENT_ORIGIN and CLIENT_ORIGIN_DEV values were present.
+
+Following these changes and a redeployment of the API, authentication began working correctly across both local development and the deployed application. This process deepened my understanding of environment management and highlighted the importance of keeping secrets out of version control.
 
 ### Unsolved Bugs
+
+#### Safari Compatibility Issue (Authentication)
+During testing, I discovered that the site functioned correctly in Chrome and Firefox, but not in Safari. Specifically, the login appeared to succeed—returning valid access and refresh tokens and triggering the success toast notification—but was followed by a 401 Unauthorized error when attempting to fetch user notifications. This prevented users from remaining logged in on Safari.
+
+After a tutoring session with Code Institute, it was confirmed that this issue is caused by Safari's strict handling of third-party cookies, which affects token-based authentication when the front-end and back-end are hosted on different domains (as is the case with Heroku). Since the browser blocks cross-origin cookies, the refresh token cannot be stored or used correctly, leading to the login failure.
+
+This issue is not caused by an error in the application’s code, and the functionality works as expected in modern browsers that do not block third-party cookies. Users are advised to access the site via Chrome or Firefox for full functionality.
 
 [Back to Contents](#contents)
 
@@ -468,4 +497,3 @@ I refrenced the following documentation to help with my understanding of Django 
 I recieved help and guidance from the **CI Tutor support** team throughout this build and **ChatGPT** for assistancxe with troubleshooting and logic refinement.
 
 [Back to Contents](#contents)
-
