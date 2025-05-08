@@ -28,8 +28,6 @@ The deployed API can be found here: [Travel API](https://travel-api-ca880bcd8809
     - [User Stories](#user-stories)
     - [Data Models](#data-models)
     - [API Endpoints](#api-endpoints)
-- [Agile Development](#agile-development)
-    - [Kanban Board](#kanban-board)
 - [Features](#features)
     - [Existing features](#existing-features)
     - [Future Feature Ideas](#future-features)
@@ -57,7 +55,7 @@ The user stories are categorized into four themes:
 
 ### [Project API set-up](https://github.com/BekMart/travel-api/issues/31)
 
-<u>User Story:</u>
+1. <u>User Story:</u>
 As a web developer I want to create a back end API to host all of the data needed for the front end to operate and link this to the front end repository so that the user can have a seamless experience.
 
 <u>Acceptance Criteria:</u>
@@ -68,7 +66,7 @@ As a web developer I want to create a back end API to host all of the data neede
 
 ### [Build models and admin](https://github.com/BekMart/travel-api/issues/32)
 
-<u>User Story:</u>
+2. <u>User Story:</u>
 As a web developer I want to create models in a custom database so that Users can complete functions such as posting comments/liking posts/following other users.
 
 <u>Acceptance Criteria:</u>
@@ -78,7 +76,7 @@ As a web developer I want to create models in a custom database so that Users ca
 
 ### [Create views with appropriate serializers and url patterns](https://github.com/BekMart/travel-api/issues/33)
 
-<u>User Story:</u>
+3. <u>User Story:</u>
 As a web developer I want to use serializers to create views which can be accessed by the user by visiting a specific url path.
 
 <u>Acceptance Criteria:</u>
@@ -90,7 +88,7 @@ As a web developer I want to use serializers to create views which can be access
 
 ### [Authentication and testing](https://github.com/BekMart/travel-api/issues/34)
 
-<u>User Story:</u>
+4. <u>User Story:</u>
 As a web developer I want to use token authentication to authenticate users login details to ensure users data is secure and updated efficiently.
 
 <u>Acceptance Criteria:</u>
@@ -179,6 +177,8 @@ The Travel API provides the following endpoints:
 | notifications/\<int:pk\>/mark-read/ | DELETE | Delete | Detail | Owner | |
 | notifications/mark-all-unread/ | DELETE | Delete | List | Owner | |
 
+[Back to Contents](#contents)
+
 <h1 id="features">Features</h1>
 
 <h2 id="existing-features">Existing Features</h2>
@@ -216,6 +216,8 @@ The Travel API provides the following endpoints:
 - Implement direct messaging between users for private conversations.
 - Add a map view to show posts based on geographic data.
 - Introduce tags or hashtags for better content discovery.
+
+[Back to Contents](#contents)
 
 <h1 id="technologies">Technologies Used</h1>
 
@@ -256,6 +258,8 @@ The Travel API provides the following endpoints:
 - <b>Cloudinary</b> – Used for storing and serving uploaded images
 - <b>Heroku</b> – Cloud platform used for deployment
 
+[Back to Contents](#contents)
+
 <h1 id="testing">Testing</h1>
 
 <h2 id="user-story-testing">User Story Testing</h1>
@@ -273,7 +277,8 @@ I have tested the functionality of all individual features and clearly evidenced
 Additionally, I have included screenshots that demonstrate how actions taken on the deployed TravelTales front-end are accurately reflected in the deployed API. This confirms the two applications are properly connected and update in real-time, fulfilling the key requirements of the developer-focused user stories. These images serve as proof that the API is working as intended and that users can successfully interact with it through the front-end interface.
 
 ### Profile
-The image below shows the `/profiles/10/` endpoint in the deployed API, displaying a user’s details such as username, bio, and profile image. These details match those seen on the front-end app. A second screenshot shows the `/dj-rest-auth/user/` endpoint confirming the user is authenticated. This is also visually confirmed on the front end, where the user’s avatar is visible in the navbar and additional authenticated navigation options are present.
+- The image below shows the `/profiles/10/` endpoint in the deployed API, displaying a user’s details such as username, bio, page stats and profile image. These details match those seen on the front-end app. 
+- A second screenshot shows the `/dj-rest-auth/user/` endpoint confirming the user is authenticated. This is also visually confirmed on the front end, where the user’s avatar is visible in the navbar and additional authenticated navigation options are present.
 <details><summary>See evidence</summary>
 
 ![Image shows the user logged into their profile as their avatar is in the navigation bar](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668472/profile_fqt7vi.png)
@@ -284,9 +289,8 @@ The image below shows the `/profiles/10/` endpoint in the deployed API, displayi
 
 ### Create Post
 
-The following image demonstrates that the "Create Post" functionality works as intended. A newly created post appears at the top of the `/posts/` endpoint in the deployed API, displaying all relevant details such as title, content, location, and image. This confirms that the data has been successfully sent from the front end to the back end.
-
-At the same time, the front-end application reflects this new post immediately on the home screen, and a success message is shown to the user, confirming that the post was created successfully and stored in the database.
+- The following image demonstrates that the "Add Post" functionality works as intended. A newly created post appears at the top of the `/posts/` endpoint in the deployed API, displaying all relevant details such as title, content, location, and image. This confirms that the data has been successfully sent from the front end to the back end.
+- At the same time, the front-end application reflects this new post immediately on the home screen, and a success message is shown to the user, confirming that the post was created successfully and stored in the database.
 <details><summary>See evidence</summary>
 
 ![Image shows a post that is displayed in the front end application.](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668493/create-post_dp5dsi.png)
@@ -296,9 +300,7 @@ At the same time, the front-end application reflects this new post immediately o
 
 ### Edit and Delete Posts
 
-The following images demonstrate the functionality of editing and deleting posts and how these actions are reflected in the back-end API.
-
-When a post is edited through the front-end application, the updated data (e.g., title, location, or content) is sent to the API, and the changes are applied directly to the same post instance - the post ID remains unchanged. This confirms that the PUT request successfully updates the existing object in the database.
+- When a post is edited through the front-end application, the updated data (e.g., title, location, or content) is sent to the API, and the changes are applied directly to the same post instance - the post ID remains unchanged. This confirms that the PUT request successfully updates the existing object in the database.
 <details><summary>See evidence</summary>
 
 ![Image shows the user has edited their post in the front end application](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668500/edit-post_y8zwdl.png)
@@ -306,7 +308,7 @@ When a post is edited through the front-end application, the updated data (e.g.,
 </details>
 <br/>
 
-When a post is deleted from the front end, the associated post instance is removed entirely from the back-end API. Visiting the same endpoint (e.g., /posts/121/) after deletion would result in a no post being displayed, confirming that the DELETE request was processed and the object no longer exists in the database.
+When a post is deleted from the front end, the associated post instance is removed entirely from the back-end API. Visiting the same endpoint (eg `/posts/121/`) after deletion would result in a no post being displayed, confirming that the DELETE request was processed and the object no longer exists in the database.
 <details><summary>See evidence</summary>
 
 ![Image shows the post has been removed from the deployed API](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668498/delete-post_jwqhlp.png) 
@@ -314,7 +316,7 @@ When a post is deleted from the front end, the associated post instance is remov
 <br/>
 
 ### Follow
-The `/followers/` end point displays all new follow instances which shows the instance created in the example below.
+The `/followers/` end point displays all follow instances which shows the new instance created in the example below.
 <details><summary>See evidence</summary>
 
 ![Image shows that the user has followed a profile via the deplpoyed website](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668512/follow_jmbwrg.png)
@@ -323,7 +325,7 @@ The `/followers/` end point displays all new follow instances which shows the in
 <br/>
 
 ### Like
-The `/likes/` end point displays all new like instances which shows the instance created in the example below.
+The `/likes/` end point displays all like instances which shows the new instance created in the example below.
 <details><summary>See evidence</summary>
 
 ![Image shows that the user has liked a post via the deplpoyed website](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668512/follow_jmbwrg.png)
@@ -332,7 +334,7 @@ The `/likes/` end point displays all new like instances which shows the instance
 <br/>
 
 ### Locations pages
-The `/locations/` endpoint shows a list of the locations which all have posts associated with them. The list within the API reflects what is being displayed in the front end application. 
+The `/locations/` endpoint displlays a list of the locations which all have posts associated with them in order of how many posts they have and the amount and the amount of comments and likes they have. The list within the API reflects what is being displayed in the front end application. 
 <details><summary>See evidence</summary>
 
 ![Image shows the locations list page](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668521/locations_qpc2hy.png)
@@ -340,11 +342,11 @@ The `/locations/` endpoint shows a list of the locations which all have posts as
 </details>
 <br/>
 
-The `/locations/slug/posts/` endpoint displays a list of posts that are assocated with a particular location which is refrenced by the slug.
+The `/locations/slug/posts/` endpoint displays a list of posts that are assocated with a particular location which is refrenced by the slug in the URL address.
 <details><summary>See evidence</summary>
 
 ![Image shows like of posts relating to Thailand](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668518/thailand_yax8hw.png)
-![The API endpoint for this list shows the same items being listed](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668516/thailand-api_b1ksg8.png)
+![The API endpoint for this list shows the same items being listed](https://res.cloudinary.com/dvgobcuck/image/upload/v1746682723/thailand-api_fzbzel.png)
 </details>
 <br/>
 
@@ -359,7 +361,100 @@ All python code written for the project passes through the PEP 8 [CI Python Lint
 
 ### Unsolved Bugs
 
+[Back to Contents](#contents)
+
 <h1 id="deployment">Deployment</h1>
 
+This project was deployed to [Heroku](https://www.heroku.com/) in the projects early stages to allow continual responsive testing.
+
+The website was deployed via Heroku by following these steps:
+
+1. I cloned my GitHub repository by running `git clone https://github.com/BekMart/travel-api.git` in the terinal of VS Code.
+
+2. In the Cloudinary dashboard, I navigated to `Settings` > `API Keys` and clicked `Generate New API Key` to obtain the `CLOUDINARY_URL` in the format `cloudinary://<your_api_key>:<your_api_secret>@dvgobcuck`.
+
+3. I requested a Code Institute-hosted PostgreSQL database [here](https://dbs.ci-dbs.net/) and received my `DATABASE_URL` via email.
+
+4. I generated a secret key from [Djecrety](https://djecrety.ir/) by clicking the `Generate` button on this site.
+
+5. In `settings.py` file in VS code, I included the following:
+- `if os.path.exists('env.py'):
+    import env`
+
+- `CLOUDINARY_STORAGE = {
+    'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
+}`
+
+- `SECRET_KEY = os.getenv('SECRET_KEY')`
+
+- `DEBUG = False`
+
+- `ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    os.environ.get("ALLOWED_HOST")
+]`
+
+- `CORS_ALLOWED_ORIGINS = [
+  origin for origin in [
+    os.environ.get('CLIENT_ORIGIN'),
+    os.environ.get('CLIENT_ORIGIN_DEV'),
+  ] if origin
+]`
+
+- `if 'DEV' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }`
+
+6. I created an `env.py` file and added the following environment variables:
+
+`import os`
+
+`os.environ['CLOUDINARY_URL'] = '***The unique URL obtained from Cloudinary***'`
+
+`os.environ['SECRET_KEY'] = '***The secret keyy  generated from Djecrety***'`
+
+`os.environ['DEV'] = '1'`
+
+`os.environ['DATABASE_URL'] = '***The PostgreSQL database URL recieved in the email***'`
+
+`os.environ['CLIENT_ORIGIN'] = 'https://travel-tales-5c522e360995.herokuapp.com'`
+
+`os.environ['CLIENT_ORIGIN_DEV'] = 'http://localhost:3000'`
+
+7. I added `env.py` to `.gitignore` to ensure sensitive credentials were not committed.
+
+8. I created a new app in Heroku by clicking `New` > `Create new app` in the dashboard. I named the app, selected Europe as my region and then clicked `Create app`.
+
+9. Under `Settings` > `Reveal Config Vars`, I added:
+
+| KEY | VALUE |
+| --- | --- |
+| ALLOWED_HOST | travel-api-ca880bcd8809.herokuapp.com |
+| CLIENT_ORIGIN | https://travel-tales-5c522e360995.herokuapp.com |
+| CLIENT_ORIGIN_DEV | http://localhost:3000 |
+| CLOUDINARY_URL | ***the URL link copied from Cloudinary*** |
+| DATABASE_URL | ***the PostgreSQL URL link copied from the email*** |
+| DISABLE_COLLECTSTATIC | 1 |
+| SECRET_KEY | ***value generated from Djecrety*** |
+
+10. In the `Deploy` tab, I selected the option to `Connect the app to GitHub`, searched for my repository, and connected it.
+
+11. I then scrolled to the `Manual Deploy` section at the bottom of the page. After ensuring the branch was set to `main`, I clicked `Deploy Branch`.
+
+12. Once deployment completed successfully, I clicked `View` to open the deployed site.
+
+[Back to Contents](#contents)
+
 <h1 id="credits">Credits</h1>
+
+[Back to Contents](#contents)
 
