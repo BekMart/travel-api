@@ -1,6 +1,10 @@
 # TravelTales API
 
-The Travel API is a Django REST Framework API that powers a social content-sharing application built for travellers. It allows users to share blog-style posts about their favourite travel destinations, including photos and written content. Other users can log in to like and comment on posts, and follow profiles, making it a platform for both inspiration and connection.
+## Adavanced Front-End - Portfolio Project 5
+
+#### Developer: BekMart
+
+Travel API is a Django REST Framework API that powers a social content-sharing application built for travellers. It allows users to share blog-style posts about their favourite travel destinations, including photos and written content. Other users can log in to like and comment on posts, and follow profiles, making it a platform for both inspiration and connection.
 
 While developed specifically for the [Travel Tales app](https://travel-tales-5c522e360995.herokuapp.com/), the API architecture is flexible enough to be adapted for other content-based or community-driven platforms.
 
@@ -16,7 +20,7 @@ The API supports secure user authentication, photo uploads, content creation, an
 - Authenticated users receive notifications when someone likes, comments, or follows them
 - Users can search and filter posts by profile owner, title, location and content.
 
-The deployed API can be fund here: [TravelTales API](https://travel-api-ca880bcd8809.herokuapp.com/)
+The deployed API can be found here: [Travel API](https://travel-api-ca880bcd8809.herokuapp.com/)
 
 <h1 id="contents">Table of Contents</h1> 
 
@@ -38,24 +42,10 @@ The deployed API can be fund here: [TravelTales API](https://travel-api-ca880bcd
     - [Functionality Testing](#functionality-testing)
     - [Validation](#validation)
     - [Bugs](#bugs)
-- [Deplloyment](#deployment)
+- [Deployment](#deployment)
 - [Credits](#credits)
 
 <h1 id="design-process">Design Process</h1>
-
-The design process for the API involved the following steps:
-
-### Strategy: 
-Defining overall project goals.
-
-### Scope: 
-Defining API requirements by writing [user stories](#user-stories) for the front end application and subsequently defining user stories for the API itself, with a Minimum Viable Product (MVP) approach in mind.
-
-### Structure: 
-Designing the [data models](#data-models) and outlining [API endpoints](#api-endpoints).
-
-### Remainder:
-The Skeleton and Surface design planes are part of the design process for the front end application.
 
 <h2 id="user-stories">User Stories</h2>
 
@@ -109,13 +99,11 @@ As a web developer I want to use token authentication to authenticate users logi
 - Test all CRUD endpoints
 - Deploy API and test production URL
 
-Furthermore, user stories are prioritized using the MoSCoW proritization technique.
-
 <h2 id="data-models">Data Models</h2>
 
 A simple but effective Entity Relationship Diagram (ERD) was created to visualise the relationships between the models. This guided the API structure and ensured clear, logical connections between user actions and data representation.
 
-![This is the ERD which was created to show the database structure and the relationships held between the different models][ERD]
+![This is the ERD which was created to show the database structure and the relationships held between the different models](https://res.cloudinary.com/dvgobcuck/image/upload/v1746433801/ERD_dlavr8.png)
 
 ### Profile Model
 Represents user profile data, extending the default User model with a one-to-one relationship. Includes fields for name, bio, and profile image. Profiles are automatically created when a user registers.
@@ -191,21 +179,6 @@ The Travel API provides the following endpoints:
 | notifications/\<int:pk\>/mark-read/ | DELETE | Delete | Detail | Owner | |
 | notifications/mark-all-unread/ | DELETE | Delete | List | Owner | |
 
-<h1 id="agile-development">AgileDevelopement</h1>
-
-<h2 id="kanban-board">Kanban Board</h2>
-
-For this project, I used a Kanban board in GitHub as an agile tool to visualise my workflow, organise tasks, and maintain steady progress throughout development. This approach helped streamline processes, identify bottlenecks, and prioritise tasks effectively.
-
-- A single GitHub Project was created to manage both the TravelTales back-end and front-end development.
-- I used GitHub Issues to represent individual user stories.
-- Each user story was grouped into an Epic for better organisation.
-- Issues were categorised using the MoSCoW prioritisation technique:
-    - Must Have, Should Have, Could Have, and Won’t Have.
-- Milestones and the Project Roadmap were used to support effective time management and iterative delivery.
-- The Kanban board was divided into three clear stages:
-    - To Do, In Progress, and Done.
-
 <h1 id="features">Features</h1>
 
 <h2 id="existing-features">Existing Features</h2>
@@ -236,7 +209,6 @@ For this project, I used a Kanban board in GitHub as an agile tool to visualise 
     - Users can enter keywords to search posts. This includes title, content, owner and location. 
 - **Popular Results**:
     - There is a display of most popular profiles, locations and posts based on activity such as amoutn of posts, likes and comments and followers.
-
 
 <h2 id="future-features">Future Features</h2>
 
@@ -274,7 +246,6 @@ For this project, I used a Kanban board in GitHub as an agile tool to visualise 
 - `python3-openid`, `oauthlib`, `requests-oauthlib` -	Support for social login features via allauth
 - `cryptography`, `cffi`, `pycparser`	- Required dependencies for handling JWT and HTTPS securely
 
-
 <h2 id="other-software">Other Software & Tools</h2>
 
 - <b>Visual Studio Code (VS Code)</b> - Source code editor used during development
@@ -289,7 +260,93 @@ For this project, I used a Kanban board in GitHub as an agile tool to visualise 
 
 <h2 id="user-story-testing">User Story Testing</h1>
 
-<h2 id="functionality-testing">Functionality Testing</h2>
+1. As a web developer I want to create a back end API to host all of the data needed for the front end to operate and link this to the front end repository so that the user can have a seamless experience.
+
+2. As a web developer I want to create models in a custom database so that Users can complete functions such as posting comments/liking posts/following other users.
+
+3. As a web developer I want to use serializers to create views which can be accessed by the user by visiting a specific url path.
+
+4. As a web developer I want to use token authentication to authenticate users login details to ensure users data is secure and updated efficiently.
+
+I have tested the functionality of all individual features and clearly evidenced their correct behavior in the [User stories section]() of the TravelTales README file. 
+
+Additionally, I have included screenshots that demonstrate how actions taken on the deployed TravelTales front-end are accurately reflected in the deployed API. This confirms the two applications are properly connected and update in real-time, fulfilling the key requirements of the developer-focused user stories. These images serve as proof that the API is working as intended and that users can successfully interact with it through the front-end interface.
+
+### Profile
+The image below shows the `/profiles/10/` endpoint in the deployed API, displaying a user’s details such as username, bio, and profile image. These details match those seen on the front-end app. A second screenshot shows the `/dj-rest-auth/user/` endpoint confirming the user is authenticated. This is also visually confirmed on the front end, where the user’s avatar is visible in the navbar and additional authenticated navigation options are present.
+<details><summary>See evidence</summary>
+
+![Image shows the user logged into their profile as their avatar is in the navigation bar](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668472/profile_fqt7vi.png)
+![Image show the results in the back end - profile end point displaying user data matching the data of the users profile being displayed](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668469/profile-api_uvo33m.png)
+![End point shows that details of currently authenticated user](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668469/authenticated_vjuqy1.png)
+</details>
+<br/>
+
+### Create Post
+
+The following image demonstrates that the "Create Post" functionality works as intended. A newly created post appears at the top of the `/posts/` endpoint in the deployed API, displaying all relevant details such as title, content, location, and image. This confirms that the data has been successfully sent from the front end to the back end.
+
+At the same time, the front-end application reflects this new post immediately on the home screen, and a success message is shown to the user, confirming that the post was created successfully and stored in the database.
+<details><summary>See evidence</summary>
+
+![Image shows a post that is displayed in the front end application.](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668493/create-post_dp5dsi.png)
+![Image of new post details in the deployed API](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668494/create-post-api_qpqi4v.png) 
+</details>
+<br/>
+
+### Edit and Delete Posts
+
+The following images demonstrate the functionality of editing and deleting posts and how these actions are reflected in the back-end API.
+
+When a post is edited through the front-end application, the updated data (e.g., title, location, or content) is sent to the API, and the changes are applied directly to the same post instance - the post ID remains unchanged. This confirms that the PUT request successfully updates the existing object in the database.
+<details><summary>See evidence</summary>
+
+![Image shows the user has edited their post in the front end application](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668500/edit-post_y8zwdl.png)
+![Updated details are in the deployed API under the same original post id](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668502/edit-post-api_mq4y3l.png) 
+</details>
+<br/>
+
+When a post is deleted from the front end, the associated post instance is removed entirely from the back-end API. Visiting the same endpoint (e.g., /posts/121/) after deletion would result in a no post being displayed, confirming that the DELETE request was processed and the object no longer exists in the database.
+<details><summary>See evidence</summary>
+
+![Image shows the post has been removed from the deployed API](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668498/delete-post_jwqhlp.png) 
+</details>
+<br/>
+
+### Follow
+The `/followers/` end point displays all new follow instances which shows the instance created in the example below.
+<details><summary>See evidence</summary>
+
+![Image shows that the user has followed a profile via the deplpoyed website](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668512/follow_jmbwrg.png)
+![All follow details are recorded in the deployed API](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668510/followers-api_wysz4u.png)
+</details>
+<br/>
+
+### Like
+The `/likes/` end point displays all new like instances which shows the instance created in the example below.
+<details><summary>See evidence</summary>
+
+![Image shows that the user has liked a post via the deplpoyed website](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668512/follow_jmbwrg.png)
+![All like details are recorded in the deployed API](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668510/followers-api_wysz4u.png)
+</details>
+<br/>
+
+### Locations pages
+The `/locations/` endpoint shows a list of the locations which all have posts associated with them. The list within the API reflects what is being displayed in the front end application. 
+<details><summary>See evidence</summary>
+
+![Image shows the locations list page](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668521/locations_qpc2hy.png)
+![The locations list within the API matches the list displayed in the front end app ](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668516/locations-api_tqv9y8.png)
+</details>
+<br/>
+
+The `/locations/slug/posts/` endpoint displays a list of posts that are assocated with a particular location which is refrenced by the slug.
+<details><summary>See evidence</summary>
+
+![Image shows like of posts relating to Thailand](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668518/thailand_yax8hw.png)
+![The API endpoint for this list shows the same items being listed](https://res.cloudinary.com/dvgobcuck/image/upload/v1746668516/thailand-api_b1ksg8.png)
+</details>
+<br/>
 
 <h2 id="validation">Validation</h2>
 
@@ -306,6 +363,3 @@ All python code written for the project passes through the PEP 8 [CI Python Lint
 
 <h1 id="credits">Credits</h1>
 
-
-
-[ERD]: https://res.cloudinary.com/dvgobcuck/image/upload/v1746433801/ERD_dlavr8.png
